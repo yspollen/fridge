@@ -19,7 +19,7 @@ mongoose.connect(dbConnectionString, {dbName: dbName});
 const connection = mongoose.connection;
 
 connection.once('open', function() {
-    console.log("MongoDB database connection establishea successfully");
+    console.log("MongoDB database connection established successfully");
 })
 
 
