@@ -8,12 +8,11 @@ const itemRoutes = express.Router();
 const dbConnectionString = require('./config/keys').mongoURI;
 const dbName = "fridge";
 
-
 let Item = require("./models/item-model");
+let User = require("./models/user-model");
 
 app.use(cors());
 app.use(bodyparser.json());
-
 
 mongoose.connect(dbConnectionString, {dbName: dbName});
 const connection = mongoose.connection;
@@ -22,14 +21,34 @@ connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
 
-
 app.get("/", function(req, res){
   res.send("Hello World, this is the fridge app! (test message)");
 });
 
+app.get("/users", function(req, res){
+  User.find(function(err, fridge) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(fridge);
+    }
+  });
+});
+
+app.post("/register", function(req, res){
+  var user = new User(req.body);
+  user.save()
+  .then(user => {
+    res.status(200).json({'user': 'new user added to the db successfully'});
+  })
+  .catch(err => {
+    res.status(400).send('adding new user to fridge failed');
+    console.log(err);
+  });
+});
+
 // middleware router
 app.use('/items', itemRoutes);
-
 app.listen(port, () => {
   console.log("Server listening on port " + port);
 });
