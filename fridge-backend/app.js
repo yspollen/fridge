@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const cors = require("cors");
 const itemRoutes = express.Router();
-const dbConnectionString = "mongodb+srv://user:password54321@cluster-4gumf.mongodb.net/test?retryWrites=true";
+const dbConnectionString = require('./config/keys').mongoURI;
 const dbName = "fridge";
 
 
@@ -45,16 +45,28 @@ itemRoutes.route('/').get(function(req, res) {
   });
 });
 
-
 // add items to the db
 itemRoutes.route('/add').post(function(req, res) {
   var fridgeItem = new Item(req.body);
   fridgeItem.save()
-        .then(fridgeItem => {
-            res.status(200).json({'item': 'new item added to the db successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new item to fridge failed');
-            console.log(err);
-        });
+  .then(fridgeItem => {
+    res.status(200).json({'item': 'new item added to the db successfully'});
+  })
+  .catch(err => {
+    res.status(400).send('adding new item to fridge failed');
+    console.log(err);
+  });
+});
+
+// remove items from the db
+itemRoutes.route('/remove').post(function(req, res) {
+  var fridgeItem = new Item(req.body);
+  Item.findOneAndRemove({item_name: fridgeItem.item_name})
+  .then(fridgeItem => {
+    res.status(200).json({'item': 'item removed from the db successfully'});
+  })
+  .catch(err => {
+    res.status(400).send('removing item from fridge failed');
+    console.log(err);
+  });
 });
