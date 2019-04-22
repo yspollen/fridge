@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import "./styling/register.css";
 import axios from 'axios';
 
 class Register extends Component {
@@ -39,13 +40,14 @@ class Register extends Component {
 
 render() {
     return (
-      <div>
+      <div className="register">
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bssize="large">
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Email address</FormLabel>
             <FormControl
               autoFocus
               type="email"
+              placeholder="Enter email"
               onChange={this.handleChange}
               value={this.state.email}
             />
@@ -54,6 +56,7 @@ render() {
             <FormLabel>Create Password</FormLabel>
             <FormControl
               type="password"
+              placeholder="Password"
               onChange={this.handleChange}
               value={this.state.password}
             />
