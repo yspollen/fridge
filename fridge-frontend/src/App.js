@@ -29,6 +29,7 @@ class App extends Component {
 const headerStyle = {
   background: '#ccccff',
   color: '#ffffff',
+  textAlign: 'center',
   padding: '5px',
   bottomMargin: '5px'
 }

@@ -23,7 +23,7 @@ class Register extends Component {
       password: this.state.password
     })
     .then(res => console.log(res.data));
-    
+
     this.setState({
         email: '',
         password: '',

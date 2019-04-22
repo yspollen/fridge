@@ -6,7 +6,7 @@ let User = new mongoose.Schema({
     required: true
   },
   password: {
-    //To be encripted
+    //To be encrypted
     type: String,
     required: true
   }
