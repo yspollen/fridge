@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/home";
 import Item from "./components/item";
 import Register from "./components/register";
@@ -11,9 +11,11 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <h1>Fridge</h1>
+          <h1 style={headerStyle}>
+            Fridge
+          </h1>
             <Switch>
-              <Route path="/login" component={Login} />
+              <Route path="/login" component={Login}/>
               <Route path="/register" component={Register} />
               <Route path="/items/:id" component={Item} />
               <Route path="*" component={Home} />
@@ -22,6 +24,13 @@ class App extends Component {
       </Router>
     );
   }
+}
+
+const headerStyle = {
+  background: '#ccccff',
+  color: '#ffffff',
+  padding: '5px',
+  bottomMargin: '5px'
 }
 
 export default App;

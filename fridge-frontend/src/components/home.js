@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 class Home extends Component {
-  render() {
-    return (
-      <div className="Home">
-        Home
-        <p>Welcome to your fridge (user)</p>
-      </div>
-    );
-  }
+  	render() {
+    	return (
+	    	<div>
+	        	<h1>Home</h1>
+	        	<p>Welcome to your fridge (user)</p>
+	    	</div>
+    	);
+    }
 }
 
 export default Home;
