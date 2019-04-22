@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
-const port = 4000;
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const port = 4000;
+
 const itemRoutes = express.Router();
 const dbConnectionString = require('./config/keys').mongoURI;
 const dbName = "fridge";
@@ -36,14 +39,19 @@ app.get("/users", function(req, res){
 });
 
 app.post("/register", function(req, res){
-  var user = new User(req.body);
-  user.save()
-  .then(user => {
-    res.status(200).json({'user': 'new user added to the db successfully'});
-  })
-  .catch(err => {
-    res.status(400).send('adding new user to fridge failed');
-    console.log(err);
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+      req.body.password = hash;
+      var user = new User(req.body);
+      user.save()
+      .then(user => {
+        res.status(200).json({'user': 'new user added to the db successfully'});
+      })
+      .catch(err => {
+        res.status(400).send('adding new user to fridge failed');
+        console.log(err);
+      });
+    });
   });
 });
 
