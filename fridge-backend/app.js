@@ -75,13 +75,36 @@ itemRoutes.route('/').get(function(req, res) {
 // add items to the db
 itemRoutes.route('/add').post(function(req, res) {
   var fridgeItem = new Item(req.body);
-  fridgeItem.save()
-  .then(fridgeItem => {
-    res.status(200).json({'item': 'new item added to the db successfully'});
-  })
-  .catch(err => {
-    res.status(400).send('adding new item to fridge failed');
-    console.log(err);
+  Item.findOne({item_name: fridgeItem.item_name}, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    if (!result) {
+      fridgeItem.save()
+      .then(fridgeItem => {
+        res.status(200).json({'item': 'new item added to the db successfully'});
+      })
+      .catch(err => {
+        res.status(400).send('adding new item to fridge failed');
+        console.log(err);
+      });
+    } else {
+      var newQuantity;
+      if (fridgeItem.quantity) {
+        newQuantity = fridgeItem.quantity;
+      }
+      else {
+        newQuantity = result.quantity + 1;
+      }
+      Item.findOneAndUpdate({item_name: fridgeItem.item_name}, {quantity: newQuantity})
+      .then(fridgeItem => {
+        res.status(200).json({'item': 'item updated successfully'});
+      })
+      .catch(err => {
+        res.status(400).send('adding new item to fridge failed');
+        console.log(err);
+      });
+    }
   });
 });
 

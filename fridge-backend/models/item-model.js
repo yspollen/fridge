@@ -12,6 +12,14 @@ let Item = new mongoose.Schema({
   calorie_count: {
     type: Number,
     required: true
+  },
+  owner: {
+    type: String,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    default: 0
   }
 });
 
