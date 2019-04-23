@@ -61,10 +61,13 @@ app.post("/login", function(req, res){
   User.findOne({username: user.username}, function(err, loguser){
   if(err){
     console.log(err);
+  }else if(loguser == null){
+    console.log("No user found with that email");
   }else{
     console.log(loguser);
+    console.log(user);
     bcrypt.compare(user.password, loguser.password).then(function(result) {
-      //result == true
+
       if(result==false){
         console.log("Incorrect Username or Password");
       }else{
