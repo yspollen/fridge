@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
 import "./styling/register.css";
 import axios from 'axios';
 
@@ -9,7 +10,8 @@ class Register extends Component {
     this.state = {
       email: "",
       password: "",
-      confirm: ""
+      confirm: "",
+      redirect: false
     };
   }
 
@@ -23,7 +25,7 @@ class Register extends Component {
       username: this.state.email,
       password: this.state.password
     })
-    .then(res => console.log(res.data));
+    .then(() => this.setState({ redirect: true }));
 
     this.setState({
         email: '',
@@ -39,6 +41,11 @@ class Register extends Component {
   }
 
 render() {
+  const { redirect } = this.state;
+  if (redirect){
+    return <Redirect to='/login'/>;
+  }
+  else {
     return (
       <div className="register">
         <form onSubmit={this.handleSubmit}>
@@ -47,7 +54,7 @@ render() {
             <FormControl
               autoFocus
               type="email"
-              placeholder="Enter email"
+              placeholder="Enter Email"
               onChange={this.handleChange}
               value={this.state.email}
             />
@@ -65,6 +72,7 @@ render() {
             <FormLabel>Confirm Password</FormLabel>
             <FormControl
               type="password"
+              placeholder="Password"
               onChange={this.handleChange}
               value={this.state.confirm}
             />
@@ -75,6 +83,7 @@ render() {
         </form>
       </div>
     );
+  }
   }
 }
 
