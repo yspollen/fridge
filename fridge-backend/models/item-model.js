@@ -7,11 +7,9 @@ let Item = new mongoose.Schema({
   },
   expiry_date: {
     type: Date,
-    default: Date.now
   },
   calorie_count: {
     type: Number,
-    required: true
   },
   owner: {
     type: String,

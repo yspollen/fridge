@@ -30,7 +30,7 @@ const headerStyle = {
   background: '#ccccff',
   color: '#ffffff',
   textAlign: 'center',
-  padding: '5px',
+  padding: '05px',
   bottomMargin: '5px'
 }
 

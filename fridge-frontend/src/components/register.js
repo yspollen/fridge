@@ -47,7 +47,7 @@ render() {
             <FormControl
               autoFocus
               type="email"
-              placeholder="Enter email"
+              placeholder="Enter Email"
               onChange={this.handleChange}
               value={this.state.email}
             />
@@ -65,6 +65,7 @@ render() {
             <FormLabel>Confirm Password</FormLabel>
             <FormControl
               type="password"
+              placeholder="Password"
               onChange={this.handleChange}
               value={this.state.confirm}
             />

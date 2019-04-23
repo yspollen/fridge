@@ -71,16 +71,10 @@ app.post("/login", function(req, res){
         console.log("success");
         res.redirect("/items");
       }
-    });
-    
+    }); 
   }
 });
 });
-
-
-
-
-
 
 // middleware router
 app.use('/items', itemRoutes);
@@ -116,14 +110,11 @@ itemRoutes.route('/add').post(function(req, res) {
         console.log(err);
       });
     } else {
-      var newQuantity;
-      if (fridgeItem.quantity) {
-        newQuantity = fridgeItem.quantity;
-      }
-      else {
-        newQuantity = result.quantity + 1;
-      }
-      Item.findOneAndUpdate({item_name: fridgeItem.item_name}, {quantity: newQuantity})
+      var newQuantity = fridgeItem.quantity ? fridgeItem.quantity : result.quantity;
+      var newCalorie = fridgeItem.calorie_count ? fridgeItem.calorie_count : result.calorie_count;
+      var newDate = fridgeItem.expiry_date ? fridgeItem.expiry_date : result.expiry_date;
+      var newOwner = fridgeItem.owner ? fridgeItem.owner : result.owner;
+      Item.findOneAndUpdate({item_name: fridgeItem.item_name}, {quantity: newQuantity, calorie_count: newCalorie, expiry_date: newDate, owner: newOwner})
       .then(fridgeItem => {
         res.status(200).json({'item': 'item updated successfully'});
       })
