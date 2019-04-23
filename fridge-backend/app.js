@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const cors = require("cors");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const port = 4000;
 
@@ -54,6 +54,33 @@ app.post("/register", function(req, res){
     });
   });
 });
+
+//login
+app.post("/login", function(req, res){
+  var user = new User(req.body);
+  User.findOne({username: user.username}, function(err, loguser){
+  if(err){
+    console.log(err);
+  }else{
+    console.log(loguser);
+    bcrypt.compare(user.password, loguser.password).then(function(result) {
+      //result == true
+      if(result==false){
+        console.log("Incorrect Username or Password");
+      }else{
+        console.log("success");
+        res.redirect("/items");
+      }
+    });
+    
+  }
+});
+});
+
+
+
+
+
 
 // middleware router
 app.use('/items', itemRoutes);
