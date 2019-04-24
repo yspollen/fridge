@@ -11,7 +11,8 @@ class Home extends Component {
 	      calories: '',
 	      quantity: '',
 	      expiry_date: '',
-	      owner: ''
+	      owner: '',
+	      data: []
 	    };
   	}
 
@@ -65,12 +66,43 @@ class Home extends Component {
 	    });
 	}
 
+	updateItems(){
+		axios.get('http://localhost:4000/items')
+		.then(res => {
+			const data = res.data;
+			this.setState({
+				data: data
+			})
+		})
+	}
+
   	render() {
+  		this.updateItems();
     	return (
 	    	<div>
 	        	<SplitPane split="vertical" minSize={50} defaultSize={650}>
 	        	    <div>
 	        	    	<h4 style={h4Style}>Items</h4>
+	        	    	<ul>
+	        	    		Item Name&nbsp;&nbsp;&nbsp;&nbsp;
+	        	    		Quantity&nbsp;&nbsp;&nbsp;&nbsp;
+	        	    		Calorie Count&nbsp;&nbsp;&nbsp;&nbsp;
+	        	    		Expiry Date&nbsp;&nbsp;&nbsp;&nbsp;
+	        	    		Owner&nbsp;&nbsp;&nbsp;&nbsp;
+	        	    	</ul>
+	        	    	<ul>{
+	        	    		this.state.data.map((item, key) => {
+                       			return (
+                       				<li key={key}>{item.id}
+                       					{item.item_name}&nbsp;&nbsp;&nbsp;&nbsp;
+                       					{item.quantity}&nbsp;&nbsp;&nbsp;&nbsp;
+                       					{item.calories}&nbsp;&nbsp;&nbsp;&nbsp;
+                       					{item.expiry_date}&nbsp;&nbsp;&nbsp;&nbsp;
+                       					{item.owner}&nbsp;&nbsp;&nbsp;&nbsp;
+                       				</li>
+                       			)
+                    		})
+	        	    	}</ul>
 	        	    </div>
      				<div>
      					<h4 style={h4Style}>Add/Update/Remove Item</h4>
