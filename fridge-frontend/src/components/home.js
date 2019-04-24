@@ -11,7 +11,7 @@ class Home extends Component {
 	      calories: '',
 	      quantity: '',
 	      expiry_date: '',
-	      owner: ''
+	      owner: '',
 	    };
   	}
 
@@ -19,9 +19,29 @@ class Home extends Component {
 		return this.state.item_name.length > 0 && this.state.owner.length > 0;
 	} 
 
-	handleSubmit = (event) => {
+	handleSubmitAdd = (event) => {
 	    event.preventDefault();
 	    axios.post('http://localhost:4000/items/add', {
+	      item_name: this.state.item_name,
+	      calorie_count: this.state.calories,
+	      expiry_date: this.state.expiry_date,
+	      quantity: this.state.quantity,
+	      owner: this.state.owner
+	    })
+	    .then(res => console.log(res.data));
+
+	    this.setState({
+	        item_name: '',
+	      	calories: '',
+	      	quantity: '',
+	      	expiry_date: '',
+	      	owner: ''
+	    });
+	}
+
+	handleSubmitRemove = (event) => {
+	    event.preventDefault();
+	    axios.post('http://localhost:4000/items/remove', {
 	      item_name: this.state.item_name,
 	      calorie_count: this.state.calories,
 	      expiry_date: this.state.expiry_date,
@@ -45,7 +65,6 @@ class Home extends Component {
 	    });
 	}
 
-
   	render() {
     	return (
 	    	<div>
@@ -54,8 +73,8 @@ class Home extends Component {
 	        	    	<h4 style={h4Style}>Items</h4>
 	        	    </div>
      				<div>
-     					<h4 style={h4Style}>Add/Edit Item</h4>
-     					<form onSubmit={this.handleSubmit}>
+     					<h4 style={h4Style}>Add/Edit/Remove Item</h4>
+     					<form onSubmit={this.handleSubmitAdd.bind(this)}>
 				          	<FormGroup controlId="item_name" bssize="large">
 				            	<FormLabel>Item Name*</FormLabel>
 				            	<FormControl
@@ -103,8 +122,11 @@ class Home extends Component {
 				            		value={this.state.owner}
 				            	/>
 				         	</FormGroup>
-				          	<Button block type="submit" bssize="large" disabled={!this.validate()}>
+				          	<Button block name="additem" type="submit" bssize="large" disabled={!this.validate()}>
 				            	Add Item
+				          	</Button>
+				          	<Button block name="removeitem" type="submit" bssize="large" disabled={!this.validate()} onClick={this.handleSubmitRemove.bind(this)}>
+				            	Remove Item
 				          	</Button>
 				        </form>
      				</div>
