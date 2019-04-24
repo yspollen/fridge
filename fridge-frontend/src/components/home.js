@@ -11,7 +11,7 @@ class Home extends Component {
 	      calories: '',
 	      quantity: '',
 	      expiry_date: '',
-	      owner: '',
+	      owner: ''
 	    };
   	}
 
@@ -73,7 +73,7 @@ class Home extends Component {
 	        	    	<h4 style={h4Style}>Items</h4>
 	        	    </div>
      				<div>
-     					<h4 style={h4Style}>Add/Edit/Remove Item</h4>
+     					<h4 style={h4Style}>Add/Update/Remove Item</h4>
      					<form onSubmit={this.handleSubmitAdd.bind(this)}>
 				          	<FormGroup controlId="item_name" bssize="large">
 				            	<FormLabel>Item Name*</FormLabel>
@@ -123,7 +123,7 @@ class Home extends Component {
 				            	/>
 				         	</FormGroup>
 				          	<Button block name="additem" type="submit" bssize="large" disabled={!this.validate()}>
-				            	Add Item
+				            	Add/Update Item
 				          	</Button>
 				          	<Button block name="removeitem" type="submit" bssize="large" disabled={!this.validate()} onClick={this.handleSubmitRemove.bind(this)}>
 				            	Remove Item
