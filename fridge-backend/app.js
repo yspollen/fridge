@@ -6,16 +6,20 @@ const cors = require("cors");
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const port = 4000;
-
+const jwt = require("jsonwebtoken");
 const itemRoutes = express.Router();
+const cookieparser = require("cookie-parser");
 const dbConnectionString = require('./config/keys').mongoURI;
+const jwtSecret = require('./config/keys').jwtSecret;
 const dbName = "fridge";
+const auth = require('./middleware/middleware');
 
 let Item = require("./models/item-model");
 let User = require("./models/user-model");
 
 app.use(cors());
 app.use(bodyparser.json());
+app.use(cookieparser());
 
 mongoose.connect(dbConnectionString, {dbName: dbName});
 const connection = mongoose.connection;
@@ -26,6 +30,10 @@ connection.once('open', function() {
 
 app.get("/", function(req, res){
   res.send("Hello World, this is the fridge app! (test message)");
+});
+
+app.get('/checkToken', auth, function(req, res) {
+  res.sendStatus(200);
 });
 
 app.get("/users", function(req, res){
@@ -58,6 +66,7 @@ app.post("/register", function(req, res){
 //login
 app.post("/login", function(req, res){
   var user = new User(req.body);
+  console.log(user.email);
   User.findOne({username: user.username}, function(err, loguser){
   if(err){
     console.log(err);
@@ -70,9 +79,11 @@ app.post("/login", function(req, res){
 
       if(result==false){
         console.log("Incorrect Username or Password");
+        res.status(400).json({ msg: 'Invalid credentials' });
       }else{
         console.log("success");
-        res.redirect("/items");
+        const token = jwt.sign({email: loguser.email}, jwtSecret, {expiresIn: 3600});
+        res.cookie('token', token, { httpOnly: true }).sendStatus(200);
       }
     }); 
   }

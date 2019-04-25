@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import "./styling/login.css";
+import axios from 'axios';
+
 
 class Login extends Component {
   constructor(props) {
@@ -17,6 +19,33 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    // axios.post('http://localhost:4000/login', {
+    //   username: this.state.email,
+    //   password: this.state.passwd
+    // })
+    // // fetch('http://localhost:4000/login', {
+    // //   username: this.state.email,
+    // //   password: this.state.passwd,
+    // //   credentials: 'include',
+    // //   method: 'POST',
+    // //   body: JSON.stringify(this.state),
+    // //   headers: {
+    // //     'Content-Type': 'application/json'
+    // //   }
+    // // })
+    // .then(res => {
+    //   console.log(res);
+    //   if (res.status === 200) {
+    //     this.props.history.push('/');
+    //   } else {
+    //     const error = new Error(res.error);
+    //     throw error;
+    //   }
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    //   alert('Error logging in please try again');
+    // });
   }
 
   handleChange = (event) => {
