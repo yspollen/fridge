@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div style={classStyle} className="App">
           <h1 style={headerStyle}>
             Fridge
           </h1>
@@ -32,6 +32,10 @@ const headerStyle = {
   textAlign: 'center',
   padding: '05px',
   bottomMargin: '5px'
+}
+
+const classStyle = {
+  fontFamily: "Arial"
 }
 
 export default App;

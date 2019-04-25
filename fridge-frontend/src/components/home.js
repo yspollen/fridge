@@ -17,7 +17,7 @@ class Home extends Component {
   	}
 
 	validate() {
-		return this.state.item_name.length > 0 && this.state.owner.length > 0;
+		return this.state.item_name.length > 0 && this.state.quantity.toString().length > 0 && this.state.calories.toString().length > 0 && this.state.expiry_date.toString().length > 0 && this.state.owner.length > 0;
 	} 
 
 	handleSubmitAdd = (event) => {
@@ -76,6 +76,23 @@ class Home extends Component {
 		})
 	}
 
+	autoFill(event) {
+		axios.get('http://localhost:4000/items')
+		.then(res => {
+			var requestedItemName = "apples";
+			var data = res.data.find(function(element) {
+  				return element.item_name === requestedItemName;
+			});			
+			this.setState({
+				item_name: data.item_name,
+	      		calories: data.calorie_count,
+	      		quantity: data.quantity,
+	      		expiry_date: data.expiry_date.substr(0,10),
+	      		owner: data.owner
+			})
+		})
+   	};
+
   	render() {
   		this.updateItems();
     	return (
@@ -83,23 +100,16 @@ class Home extends Component {
 	        	<SplitPane split="vertical" minSize={50} defaultSize={650}>
 	        	    <div>
 	        	    	<h4 style={h4Style}>Items</h4>
-	        	    	<ul>
-	        	    		Item Name&nbsp;&nbsp;&nbsp;&nbsp;
-	        	    		Quantity&nbsp;&nbsp;&nbsp;&nbsp;
-	        	    		Calorie Count&nbsp;&nbsp;&nbsp;&nbsp;
-	        	    		Expiry Date&nbsp;&nbsp;&nbsp;&nbsp;
-	        	    		Owner&nbsp;&nbsp;&nbsp;&nbsp;
-	        	    	</ul>
 	        	    	<ul>{
 	        	    		this.state.data.map((item, key) => {
                        			return (
-                       				<li key={key}>{item.id}
-                       					{item.item_name}&nbsp;&nbsp;&nbsp;&nbsp;
-                       					{item.quantity}&nbsp;&nbsp;&nbsp;&nbsp;
-                       					{item.calories}&nbsp;&nbsp;&nbsp;&nbsp;
-                       					{item.expiry_date}&nbsp;&nbsp;&nbsp;&nbsp;
-                       					{item.owner}&nbsp;&nbsp;&nbsp;&nbsp;
-                       				</li>
+                       				<ul onClick={this.autoFill.bind(this)} style={listStyle} key={key}>{item.id}
+                       					{item.quantity}&nbsp;
+                       					{item.item_name}&nbsp;
+                       					({item.calorie_count.toString()} calories):&nbsp;
+                       					expires on {item.expiry_date ? item.expiry_date.toString().substr(5,2) + "/" + item.expiry_date.toString().substr(8,2) + "/" + item.expiry_date.toString().substr(0,4): "mm/dd/yyyy"}&nbsp;
+                       					---&nbsp;{item.owner}
+                       				</ul>
                        			)
                     		})
 	        	    	}</ul>
@@ -174,6 +184,10 @@ const h4Style = {
   textAlign: 'center',
   padding: '0px',
   bottomMargin: '5px'
+}
+
+const listStyle = {
+	padding: "0"
 }
 
 export default Home;
