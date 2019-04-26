@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/home";
+import Item from "./components/item";
 import Register from "./components/register";
 import Login from "./components/login";
 import AuthService from './components/authService';
-// import withAuth from './components/withAuth';
+import withAuth from './components/withAuth';
 const Auth = new AuthService();
 
 class App extends Component {

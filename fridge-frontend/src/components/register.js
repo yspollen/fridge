@@ -22,7 +22,7 @@ class Register extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:4000/register', {
+    axios.post('https://cs252fridge.herokuapp.com/register', {
       username: this.state.email,
       password: this.state.password
     })

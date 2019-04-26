@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
 import withAuth from './withAuth';
 import auth from './authService';
+import { Redirect, Link } from "react-router-dom";
 
 const Auth = new auth();
 
@@ -32,7 +33,7 @@ class Home extends Component {
 
 	handleSubmitAdd = (event) => {
 	    event.preventDefault();
-	    axios.post('http://localhost:4000/items/add', {
+	    axios.post('https://cs252fridge.herokuapp.com/items/add', {
 	      item_name: this.state.item_name,
 	      calorie_count: this.state.calories,
 	      expiry_date: this.state.expiry_date,
@@ -52,7 +53,7 @@ class Home extends Component {
 
 	handleSubmitRemove = (event) => {
 	    event.preventDefault();
-	    axios.post('http://localhost:4000/items/remove', {
+	    axios.post('https://cs252fridge.herokuapp.com/items/remove', {
 	      item_name: this.state.item_name,
 	      calorie_count: this.state.calories,
 	      expiry_date: this.state.expiry_date,
@@ -77,7 +78,7 @@ class Home extends Component {
 	}
 
 	updateItems(){
-		axios.get('http://localhost:4000/items')
+		axios.get('https://cs252fridge.herokuapp.com/items')
 		.then(res => {
 			const data = res.data;
 			this.setState({
@@ -87,7 +88,7 @@ class Home extends Component {
 	}
 
 	autoFill(item_name) {
-		axios.get('http://localhost:4000/items')
+		axios.get('https://cs252fridge.herokuapp.com/items')
 		.then(res => {
 			var requestedItemName = item_name;
 			var data = res.data.find(function(element) {

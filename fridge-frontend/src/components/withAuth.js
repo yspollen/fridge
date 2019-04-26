@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import AuthService from './authService';
+import { Redirect } from "react-router-dom";
 
 
 export default function withAuth(AuthComponent) {
     // Code here now
-    const Auth = new AuthService('http://localhost:4000');
+    const Auth = new AuthService('https://cs252fridge.herokuapp.com/');
     return class AuthWrapped extends Component {
 	    constructor() {
 		    super();
