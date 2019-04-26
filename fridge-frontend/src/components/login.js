@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import "./styling/login.css";
 import AuthService from './authService';
 import axios from 'axios';
@@ -69,6 +70,7 @@ class Login extends Component {
           <Button block type="submit" disabled={!this.validate()}>
             Login
           </Button>
+          <Link to="/register">Don't have an account? Register here.</Link>
         </Form>
       </div>
     );

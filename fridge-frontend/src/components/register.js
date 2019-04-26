@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import "./styling/register.css";
 import axios from 'axios';
@@ -80,6 +81,7 @@ render() {
           <Button block type="submit" bssize="large" disabled={!this.validate()}>
             Register
           </Button>
+          <Link to="/login">Already have an account? Login here.</Link>
         </form>
       </div>
     );
