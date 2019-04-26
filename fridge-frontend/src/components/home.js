@@ -76,10 +76,10 @@ class Home extends Component {
 		})
 	}
 
-	autoFill(event) {
+	autoFill(item_name) {
 		axios.get('http://localhost:4000/items')
 		.then(res => {
-			var requestedItemName = "apples";
+			var requestedItemName = item_name;
 			var data = res.data.find(function(element) {
   				return element.item_name === requestedItemName;
 			});			
@@ -103,20 +103,21 @@ class Home extends Component {
 	        	    	<ul>{
 	        	    		this.state.data.map((item, key) => {
                        			return (
-                       				<ul onClick={this.autoFill.bind(this)} style={listStyle} key={key}>{item.id}
+                       				<a href="#" onClick={this.autoFill.bind(this, item.item_name)} style={listStyle} key={key}>{item.id}
                        					{item.quantity}&nbsp;
                        					{item.item_name}&nbsp;
                        					({item.calorie_count.toString()} calories):&nbsp;
                        					expires on {item.expiry_date ? item.expiry_date.toString().substr(5,2) + "/" + item.expiry_date.toString().substr(8,2) + "/" + item.expiry_date.toString().substr(0,4): "mm/dd/yyyy"}&nbsp;
                        					---&nbsp;{item.owner}
-                       				</ul>
+                       					<p></p>
+                       				</a>
                        			)
                     		})
 	        	    	}</ul>
 	        	    </div>
      				<div>
      					<h4 style={h4Style}>Add/Update/Remove Item</h4>
-     					<form onSubmit={this.handleSubmitAdd.bind(this)}>
+     					<form style={formStyle} onSubmit={this.handleSubmitAdd.bind(this)}>
 				          	<FormGroup controlId="item_name" bssize="large">
 				            	<FormLabel>Item Name*</FormLabel>
 				            	<FormControl
@@ -179,15 +180,19 @@ class Home extends Component {
 }
 
 const h4Style = {
-  background: '#ccccff',
+  background: '#007df7',
   color: '#ffffff',
   textAlign: 'center',
   padding: '0px',
-  bottomMargin: '5px'
+  bottomMargin: '10px'
 }
 
 const listStyle = {
-	padding: "0"
+  textAlign: 'left'
+}
+
+const formStyle = {
+
 }
 
 export default Home;

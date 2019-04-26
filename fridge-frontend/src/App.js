@@ -27,15 +27,16 @@ class App extends Component {
 }
 
 const headerStyle = {
-  background: '#ccccff',
+  background: '#007df7',
   color: '#ffffff',
   textAlign: 'center',
-  padding: '05px',
+  padding: '5px',
   bottomMargin: '5px'
 }
 
 const classStyle = {
-  fontFamily: "Arial"
+  fontFamily: "Helvetica",
+  color: '#007df7'
 }
 
 export default App;
