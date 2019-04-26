@@ -4,7 +4,6 @@ import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
 import withAuth from './withAuth';
 import auth from './authService';
-import { Redirect, Link } from "react-router-dom";
 
 const Auth = new auth();
 
