@@ -33,7 +33,7 @@ class Home extends Component {
 
 	handleSubmitAdd = (event) => {
 	    event.preventDefault();
-	    axios.post('https://cs252fridge.herokuapp.com/items/add', {
+	    axios.post('https://cs252-fridge.herokuapp.com/items/add', {
 	      item_name: this.state.item_name,
 	      calorie_count: this.state.calories,
 	      expiry_date: this.state.expiry_date,
@@ -53,7 +53,7 @@ class Home extends Component {
 
 	handleSubmitRemove = (event) => {
 	    event.preventDefault();
-	    axios.post('https://cs252fridge.herokuapp.com/items/remove', {
+	    axios.post('https://cs252-fridge.herokuapp.com/items/remove', {
 	      item_name: this.state.item_name,
 	      calorie_count: this.state.calories,
 	      expiry_date: this.state.expiry_date,
@@ -78,7 +78,7 @@ class Home extends Component {
 	}
 
 	updateItems(){
-		axios.get('https://cs252fridge.herokuapp.com/items')
+		axios.get('https://cs252-fridge.herokuapp.com/items')
 		.then(res => {
 			const data = res.data;
 			this.setState({
@@ -88,7 +88,7 @@ class Home extends Component {
 	}
 
 	autoFill(item_name) {
-		axios.get('https://cs252fridge.herokuapp.com/items')
+		axios.get('https://cs252-fridge.herokuapp.com/items')
 		.then(res => {
 			var requestedItemName = item_name;
 			var data = res.data.find(function(element) {

@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 export default function withAuth(AuthComponent) {
     // Code here now
-    const Auth = new AuthService('https://cs252fridge.herokuapp.com/');
+    const Auth = new AuthService('https://cs252-fridge.herokuapp.com/');
     return class AuthWrapped extends Component {
 	    constructor() {
 		    super();

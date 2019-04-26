@@ -10,7 +10,7 @@ export default class AuthService {
 
     login(username, password) {
         // Get a token from api server using the fetch api
-        return this.fetch(`https://cs252fridge.herokuapp.com/login`, {
+        return this.fetch(`https://cs252-fridge.herokuapp.com/login`, {
             method: 'POST',
             body: JSON.stringify({
                 username: username,

@@ -30,7 +30,7 @@ app.use(bodyparser.json());
 app.use(cookieparser());
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'https://cs252-fridge.herokuapp.com/');
     res.setHeader('Access-Control-Allow-Headers', 'Content-type,Authorization');
     next();
 });
