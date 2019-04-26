@@ -3,10 +3,8 @@ import { Form, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap
 import { Link } from 'react-router-dom';
 import "./styling/login.css";
 import AuthService from './authService';
-import axios from 'axios';
-import withAuth from './withAuth';
 
-const Auth = new AuthService();
+
 
 class Login extends Component {
   constructor(props) {
