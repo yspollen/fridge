@@ -4,7 +4,7 @@ import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
 import withAuth from './withAuth';
 import auth from './authService';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const Auth = new auth();
 
@@ -23,7 +23,13 @@ class Home extends Component {
 
 	validate() {
 		return this.state.item_name.length > 0 && this.state.quantity.toString().length > 0 && this.state.calories.toString().length > 0 && this.state.expiry_date.toString().length > 0 && this.state.owner.length > 0;
-	} 
+	}
+
+
+	handleLogout(){
+    Auth.logout()
+    this.props.history.replace('/login');
+  }
 
 	handleSubmitAdd = (event) => {
 	    event.preventDefault();
@@ -87,7 +93,7 @@ class Home extends Component {
 			var requestedItemName = item_name;
 			var data = res.data.find(function(element) {
   				return element.item_name === requestedItemName;
-			});			
+			});
 			this.setState({
 				item_name: data.item_name,
 	      		calories: data.calorie_count,
@@ -175,6 +181,9 @@ class Home extends Component {
 				          	</Button>
 				          	<Button block name="removeitem" type="submit" bssize="large" disabled={!this.validate()} onClick={this.handleSubmitRemove.bind(this)}>
 				            	Remove Item
+				          	</Button>
+										<Button block name="logout" type="submit" bssize="large" onClick={this.handleLogout.bind(this)}>
+				            	Log Out
 				          	</Button>
 				        </form>
      				</div>
