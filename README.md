@@ -3,6 +3,9 @@
 ## Project Description:
 This project is our lab submission for CS252 Lab 6 while studying at Purdue University. It mimics the structure of a refrigerator. Users can create a profile and claim possession of food items in the fridge.
 
+## Demo
+https://www.youtube.com/watch?v=RP5NRV2LeCQ
+
 ## Team Members:
 Yuhao Spollen - 
 yspollen@purdue.edu
