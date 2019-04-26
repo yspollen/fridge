@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import withAuth from './withAuth';
 class Item extends Component {
   render() {
     return (
@@ -11,4 +11,4 @@ class Item extends Component {
   }
 }
 
-export default Item;
+export default withAuth(Item);

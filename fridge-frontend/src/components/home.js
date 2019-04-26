@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
+import withAuth from './withAuth';
+import auth from './authService';
+import { Redirect } from "react-router-dom";
+
+const Auth = new auth();
 
 class Home extends Component {
 	constructor(props) {
@@ -177,7 +182,8 @@ class Home extends Component {
 	    	</div>
     	);
     }
-}
+    }
+
 
 const h4Style = {
   background: '#007df7',
@@ -195,4 +201,4 @@ const formStyle = {
 
 }
 
-export default Home;
+export default withAuth(Home);

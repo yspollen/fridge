@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import "./styling/login.css";
+import AuthService from './authService';
 import axios from 'axios';
+import withAuth from './withAuth';
 
+const Auth = new AuthService();
 
 class Login extends Component {
   constructor(props) {
@@ -11,6 +14,9 @@ class Login extends Component {
       email: "",
       passwd: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleFormSubmit = this.handleSubmit.bind(this);
+    this.Auth = new AuthService();
   }
 
   validate() {
@@ -19,33 +25,16 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // axios.post('http://localhost:4000/login', {
-    //   username: this.state.email,
-    //   password: this.state.passwd
-    // })
-    // // fetch('http://localhost:4000/login', {
-    // //   username: this.state.email,
-    // //   password: this.state.passwd,
-    // //   credentials: 'include',
-    // //   method: 'POST',
-    // //   body: JSON.stringify(this.state),
-    // //   headers: {
-    // //     'Content-Type': 'application/json'
-    // //   }
-    // // })
-    // .then(res => {
-    //   console.log(res);
-    //   if (res.status === 200) {
-    //     this.props.history.push('/');
-    //   } else {
-    //     const error = new Error(res.error);
-    //     throw error;
-    //   }
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    //   alert('Error logging in please try again');
-    // });
+    //console.log(this.state.email);
+   // console.log(this.state.passwd);
+    this.Auth.login(this.state.email,this.state.passwd)
+            .then(res =>{
+              console.log("Yee baby");
+               this.props.history.replace('/item');
+            })
+            .catch(err =>{
+                alert(err);
+            })
   }
 
   handleChange = (event) => {
@@ -84,6 +73,8 @@ class Login extends Component {
       </div>
     );
   }
+
+
 }
 
 export default Login;

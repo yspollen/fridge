@@ -13,13 +13,28 @@ const dbConnectionString = require('./config/keys').mongoURI;
 const jwtSecret = require('./config/keys').jwtSecret;
 const dbName = "fridge";
 const auth = require('./middleware/middleware');
+const exjwt = require('express-jwt');
+const secret = "give me formuoli";
 
 let Item = require("./models/item-model");
 let User = require("./models/user-model");
-
+ 
 app.use(cors());
 app.use(bodyparser.json());
 app.use(cookieparser());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-type,Authorization');
+    next();
+});
+
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
+
+const jwtMW = exjwt({
+    secret: secret
+});
 
 mongoose.connect(dbConnectionString, {dbName: dbName});
 const connection = mongoose.connection;
@@ -66,29 +81,52 @@ app.post("/register", function(req, res){
 //login
 app.post("/login", function(req, res){
   var user = new User(req.body);
-  console.log(user.email);
+  //console.log(user.username);
   User.findOne({username: user.username}, function(err, loguser){
   if(err){
     console.log(err);
   }else if(loguser == null){
     console.log("No user found with that email");
   }else{
-    console.log(loguser);
+    //console.log(loguser);
     console.log(user);
     bcrypt.compare(user.password, loguser.password).then(function(result) {
 
       if(result==false){
         console.log("Incorrect Username or Password");
-        res.status(400).json({ msg: 'Invalid credentials' });
+        res.status(401).json({
+            sucess: false,
+            token: null,
+            err: 'Username or password is incorrect'
+        });
       }else{
         console.log("success");
-        const token = jwt.sign({email: loguser.email}, jwtSecret, {expiresIn: 3600});
-        res.cookie('token', token, { httpOnly: true }).sendStatus(200);
+            let token = jwt.sign({ id: user.id, username: user.username }, secret, { expiresIn: 129600 }); // Sigining the token
+            res.json({
+                sucess: true,
+                err: null,
+                token
+            });
       }
     }); 
   }
 });
 });
+
+app.get('/', jwtMW , (req, res) => {
+    res.send('You are authenticated'); //Sending some response when authenticated
+});
+
+// Error handling 
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') { // Send the error rather than to show it on the console
+        res.status(401).send(err);
+    }
+    else {
+        next(err);
+    }
+});
+
 
 // middleware router
 app.use('/items', itemRoutes);
